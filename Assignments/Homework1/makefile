@@ -4,14 +4,13 @@ DVIPDF  = dvipdft
 XDVI	= xdvi -gamma 4
 GH		= gv
 
-CC = gcc
-FILES = in_one.c in_two.c
-
 EXAMPLES = $(wildcard *.c)
 SRC	:= $(shell egrep -l '^[^%]*\\begin\{document\}' *.tex)
 TRG	= $(SRC:%.tex=%.dvi)
 PSF	= $(SRC:%.tex=%.ps)
 PDF	= $(SRC:%.tex=%.pdf)
+
+all: pdf program
 
 pdf: $(PDF)
 
@@ -35,12 +34,12 @@ show: $(TRG)
 showps: $(PSF)
 	@for i in $(PSF) ; do $(GH) $$i & done
 
-build: $(FILES)
-        $(CC) -o $(OUT_EXE) $(FILES)
-
-all: pdf build
+program:
+	gcc mt19937ar.c
+	gcc assignment1.c
+	gcc mt19937ar.o assignment1.o -pthread -o assignment1
 
 clean:
-	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o
+	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o assignment1
 
 .PHONY: all show clean ps pdf showps build
