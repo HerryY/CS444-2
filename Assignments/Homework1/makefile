@@ -35,9 +35,9 @@ showps: $(PSF)
 	@for i in $(PSF) ; do $(GH) $$i & done
 
 program:
-	gcc mt19937ar.c
-	gcc assignment1.c
-	gcc mt19937ar.o assignment1.o -pthread -o assignment1
+	g++ -c mt19937ar.c
+	g++ -c assignment1.c
+	g++ mt19937ar.o assignment1.o -pthread -o assignment1
 
 clean:
 	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o assignment1
