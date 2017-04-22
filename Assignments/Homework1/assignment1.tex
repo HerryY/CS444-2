@@ -81,7 +81,58 @@ We also ran it on our own machines, which should use rdrand, and on os-access, w
 \par
 The things learned during this assignment were mostly ones forgotten from Operating Systems I, or that hadn't been used in a while, such as setting up pthreads and concurrency problems. 
 
+\newpage
+
 \section{QEMU Flag Explanation}
+
+\begin{itemize}
+
+\item -gdb tcp::5726
+\begin{itemize}
+\item{Tells qemu to wait for a communication on our specified gdb device, which we have hosted on socket 5726. It won't run until connected.}
+\end{itemize}
+\item -S
+\begin{itemize}
+\item{Tells qemu not to start the cpu on system startup.}
+\end{itemize}
+\item -nographic
+\begin{itemize}
+\item{Completely disables graphical output for qemu.}
+\end{itemize}
+\item -kernel linux-yocto-3.14/arch/x86/boot/bzImage
+\begin{itemize}
+\item{Specifies a kernel image for the session. This is the one we compiled for the assignment.}
+\end{itemize}
+\item -drive file=core-image-lsb-sdk-qemux86.ext3,if=virtio
+\begin{itemize}
+\item{Tells qemu a drive to boot from. The file= argument lets us use a disk image file, and creates one if it doesn't exist.}
+\end{itemize}
+\item -enable-kvm
+\begin{itemize}
+\item{Enables KVM full virtualization support.}
+\end{itemize}
+\item -net none
+\begin{itemize}
+\item{Tells qemu that no network devices should be configured.}
+\end{itemize}
+\item -usb
+\begin{itemize}
+\item{Enables the usb driver.}
+\end{itemize}
+\item -localtime
+\begin{itemize}
+\item{Uses localtime instead of UTC.}
+\end{itemize}
+\item --no-reboot
+\begin{itemize}
+\item{Exits the system instead of rebooting when a reboot command is run.}
+\end{itemize}
+\item --append "root=/dev/vda rw console=ttyS0 debug"
+\begin{itemize}
+\item{Sets the current command line options for the kernel boot.}
+\end{itemize}
+
+\end{itemize}
 
 \newpage
 
