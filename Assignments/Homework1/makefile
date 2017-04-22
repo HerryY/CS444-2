@@ -4,6 +4,9 @@ DVIPDF  = dvipdft
 XDVI	= xdvi -gamma 4
 GH		= gv
 
+CC = gcc
+FILES = in_one.c in_two.c
+
 EXAMPLES = $(wildcard *.c)
 SRC	:= $(shell egrep -l '^[^%]*\\begin\{document\}' *.tex)
 TRG	= $(SRC:%.tex=%.dvi)
@@ -19,9 +22,6 @@ $(TRG): %.dvi: %.tex $(EXAMPLES)
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) $<
-	#remove the pygmentized output to avoid cluttering up the directory
-	#rm __${SRC}.tex
-
 
 $(PSF):%.ps: %.dvi
 	$(DVIPS) -R -Poutline -t letter $< -o $@
@@ -35,9 +35,12 @@ show: $(TRG)
 showps: $(PSF)
 	@for i in $(PSF) ; do $(GH) $$i & done
 
-all: pdf
+build: $(FILES)
+        $(CC) -o $(OUT_EXE) $(FILES)
+
+all: pdf build
 
 clean:
-	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg
+	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o
 
-.PHONY: all show clean ps pdf showps
+.PHONY: all show clean ps pdf showps build
