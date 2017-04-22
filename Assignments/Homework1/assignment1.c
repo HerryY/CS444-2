@@ -99,7 +99,7 @@ void get(struct prodcons *p, int sleep){
 		p->buffer[i] = p->buffer[i+1];
     	p->size--;
 
-	printf("\ncosnume an item %d, sleep time is %d\n", data, sleep);
+	printf("\nconsume an item %d, sleep time is %d\n", data, sleep);
 	pthread_cond_signal(&p->notfull);
 
 	pthread_mutex_unlock(&p->lock);
