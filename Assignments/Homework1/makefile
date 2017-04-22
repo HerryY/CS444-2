@@ -35,7 +35,7 @@ showps: $(PSF)
 	@for i in $(PSF) ; do $(GH) $$i & done
 
 program:
-	g++ -c assignment1.c -o prog -lpthread
+	g++ assignment1.c -o prog -lpthread
 
 clean:
 	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o prog
