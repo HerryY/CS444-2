@@ -1,4 +1,3 @@
-
 //Assignment 1
 //concurrency program 1 
 
@@ -143,15 +142,30 @@ void *consumer(void *data){
     	return NULL;
 }
 
-int main(){
-	pthread_t th_p,th_c;
-   	pthread_init(&buffer);
-    
-	pthread_create(&th_p, NULL, producer, 0);
-    pthread_create(&th_c, NULL, consumer, 0);
-   	
-	pthread_join(th_p, NULL);
-   	pthread_join(th_c, NULL);
+int main(int argc, char** argv){
+   	if (argc != 2) {
+	   printf("Need to enter number of threads.\n");
+	   return 1;
+	}
+	int num = atoi(argv[1]);
+	if (num < 2) {
+	   printf("Can't spawn less than 2 threads.\n");
+	   return 1;
+	}
+	pthread_t* threads;
+	threads = (pthread_t*)malloc(num*sizeof(pthread_t));
+	pthread_init(&buffer);
+	for(int i=0;i<num;i++) {
+	   if(i % 2 == 0) {
+	      pthread_create(&threads[i], NULL, producer, 0);
+	   }
+	   else {
+	      pthread_create(&threads[i], NULL, consumer, 0);
+	   }
+	}
+	for(int i=0;i<num;i++) {
+	   pthread_join(threads[i], NULL);
+	}
    	
 	return 0;
 }
