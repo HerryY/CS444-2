@@ -38,6 +38,6 @@ program:
 	g++ -c assignment1.c -o prog -lpthread
 
 clean:
-	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o assignment1
+	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.o prog
 
 .PHONY: all show clean ps pdf showps build
